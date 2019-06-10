@@ -59,6 +59,30 @@ func addTodo(c *gin.Context) {
 	}
 }
 
+func deleteList(c *gin.Context) {
+	dbDeleteAll()
+	c.JSON(200, gin.H{
+		"status":  "success",
+		"message": "deleted",
+	})
+}
+
+func deleteTodo(c *gin.Context) {
+	idStr := c.Param("id")
+	want, _ := strconv.Atoi(idStr)
+	_, notFound := dbGetOne(want)
+	if notFound {
+		c.String(404, "Not Found\n")
+	} else {
+		dbDeleteOne(want)
+		c.JSON(200, gin.H{
+			"status":  "success",
+			"message": "deleted",
+			"id":      want,
+		})
+	}
+}
+
 func dbSetUp() {
 	db, err := gorm.Open("mysql", "root:@tcp(localhost:3306)/go_todo")
 	if err != nil {
@@ -102,11 +126,35 @@ func dbGetAll() []Todo {
 	return list
 }
 
+func dbDeleteAll() {
+	db, err := gorm.Open("mysql", "root:@tcp(localhost:3306)/go_todo?parseTime=true")
+	if err != nil {
+		panic("Error in dbDeleteAll()")
+	}
+	var todo []Todo
+	db.Find(&todo)
+	db.Delete(&todo)
+	defer db.Close()
+}
+
+func dbDeleteOne(id int) {
+	db, err := gorm.Open("mysql", "root:@tcp(localhost:3306)/go_todo?parseTime=true")
+	if err != nil {
+		panic("Error in dbDeleteOne()")
+	}
+	var todo Todo
+	db.Find(&todo, id)
+	db.Delete(&todo)
+	defer db.Close()
+}
+
 func main() {
 	dbSetUp()
 	r := gin.Default()
 	r.GET("/api/v1/event", getList)
 	r.GET("/api/v1/event/:id", getTodo)
 	r.POST("/api/v1/event", addTodo)
+	r.DELETE("api/v1/event", deleteList)
+	r.DELETE("/api/v1/event/:id", deleteTodo)
 	r.Run()
 }
