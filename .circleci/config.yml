@@ -9,7 +9,7 @@ jobs:
             - checkout
             - run:
                 name: get lib
-                command: go get -d -t
+                command: go get -v -t -d ./...
             - run:
                 name: run server
                 command: go run todo_server.go
@@ -18,4 +18,4 @@ jobs:
                 name: run test
                 command: |
                     sleep 10
-                    go test -v
+                    go test -v ./...
