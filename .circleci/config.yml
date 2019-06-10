@@ -18,4 +18,5 @@ jobs:
                 name: run test
                 shell: /bin/sh
                 command: |
-                    go test
+                    sleep 10
+                    go test -v
