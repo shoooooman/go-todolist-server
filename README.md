@@ -13,7 +13,9 @@ go run todo_server.go
 ### 実装した機能
 - todoの追加
 - todo一覧の取得
-- todoを一件ずつ取得
+- todoを一件取得
+- todoを全削除
+- todoを一件削除
 - DBにtodoリストを保存
 
 ### 使った技術
@@ -56,6 +58,26 @@ GET /api/v1/event/${id}
 # イベント1件取得 response
 200 OK
 {"id": 1, "deadline": "2019-06-11T14:00:00+09:00", "title": "レポート提出", "memo": ""}
+
+404 Not Found
+```
+
+```
+# イベント全削除 request
+DELETE /api/v1/event
+
+# イベント全削除 response
+200 OK
+{"status": "success", "message": "deleted"}
+```
+
+```
+# イベント1件削除 request
+DELETE /api/v1/event/${id}
+
+# イベント1件削除 response
+200 OK
+{"status": "success", "message": "deleted", "id": 1}
 
 404 Not Found
 ```
