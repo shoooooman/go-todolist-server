@@ -108,7 +108,7 @@ func TestGetListSuccess(t *testing.T) {
 }
 
 func TestGetTodoSuccess(t *testing.T) {
-	id := "0"
+	id := "1"
 	api := url + "/api/v1/event/" + id
 	req, _ := http.NewRequest("GET", api, nil)
 

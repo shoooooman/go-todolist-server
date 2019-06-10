@@ -4,6 +4,9 @@ jobs:
     build:
         docker:
             - image: circleci/golang:1.12.5
+            - image: circleci/mysql:8.0.16
+              environment:
+                  MYSQL_DATABASE: go_todo
         working_directory: /go/src/github.com/shoooooman/go-todolist-server
         steps:
             - checkout
