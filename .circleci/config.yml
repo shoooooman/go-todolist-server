@@ -1,0 +1,19 @@
+version: 2.1
+
+jobs:
+    build:
+        environment:
+            - GOPATH: ~/go
+        docker:
+            - image: circleci/golang:1.12.5
+        working_directory: ~/go/src/github.com/shoooooman/go-todolist-server
+        steps:
+            - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
+            - checkout
+            - run:
+                name: run server
+                command: go run todo_server.go
+                backgroud: true
+            - run:
+                name: run test
+                command: go test
