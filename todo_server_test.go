@@ -57,6 +57,34 @@ func TestAddTodoSuccess(t *testing.T) {
 	}
 }
 
+func TestAddTodoFail(t *testing.T) {
+	api := url + "/api/v1/event"
+
+	// Request JSON
+	deadline := "2019/06/11/14:00:00+09:00"
+	title := "レポート提出"
+	memo := ""
+
+	jsonStr := `{"deadline":"` + deadline + `","title":"` + title + `","memo":"` + memo + `"}`
+	req, _ := http.NewRequest(
+		"POST",
+		api,
+		bytes.NewBuffer([]byte(jsonStr)),
+	)
+	req.Header.Set("Content-Type", "application/json")
+
+	client := new(http.Client)
+	rsp, err := client.Do(req)
+	if err != nil {
+		t.Fatal("Request failed")
+	}
+	defer rsp.Body.Close()
+
+	if rsp.StatusCode != 400 {
+		t.Fatal("Request failed with status code " + strconv.Itoa(rsp.StatusCode))
+	}
+}
+
 func TestGetListSuccess(t *testing.T) {
 	api := url + "/api/v1/event"
 	req, _ := http.NewRequest("GET", api, nil)
@@ -99,5 +127,22 @@ func TestGetTodoSuccess(t *testing.T) {
 	var todo Todo
 	if err := json.Unmarshal(body, &todo); err != nil {
 		t.Fatal("Response type is not Todo")
+	}
+}
+
+func TestGetTodoFail(t *testing.T) {
+	id := "-1"
+	api := url + "/api/v1/event/" + id
+	req, _ := http.NewRequest("GET", api, nil)
+
+	client := new(http.Client)
+	rsp, err := client.Do(req)
+	if err != nil {
+		t.Fatal("Request failed")
+	}
+	defer rsp.Body.Close()
+
+	if rsp.StatusCode != 404 {
+		t.Fatal("Request failed with status code " + strconv.Itoa(rsp.StatusCode))
 	}
 }
