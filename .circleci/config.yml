@@ -16,4 +16,6 @@ jobs:
                 backgroud: true
             - run:
                 name: run test
-                command: go test
+                shell: /bin/sh
+                command: |
+                    go test
