@@ -2,10 +2,13 @@ version: 2.1
 
 jobs:
     build:
+        environment:
+            - GOPATH: /home/go
         docker:
             - image: circleci/golang:1.12.5
-        working_directory: /go/src/github.com/shoooooman/go-todolist-server
+        working_directory: /home/go/src/github.com/shoooooman/go-todolist-server
         steps:
+            - run: echo 'export PATH=${GOPATH}/bin/:${PATH}' >> $BASH_ENV
             - checkout
             - run:
                 name: run server
