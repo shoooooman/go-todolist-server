@@ -9,15 +9,18 @@ go run todo_server.go
 `localhost:8080`をListen
 
 ## 概要
-### 実装したもの
+### 実装した機能
 - todoの追加
 - todo一覧の取得
 - todoを一件ずつ取得
+- DBにtodoリストを保存
 
 ### 使った技術
-- golang (v.1.12.5)
-- gin (web framework)
-- CircleCI (v.2.1)
+- 言語: golang (v.1.12.5)
+- Webフレームワーク: gin
+- DB: MySQL (v.8.0.16)
+- ORM: GORM
+- CI: CircleCI (v.2.1)
 
 ## API一覧
 ```
