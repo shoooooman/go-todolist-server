@@ -16,7 +16,6 @@ jobs:
                 backgroud: true
             - run:
                 name: run test
-                shell: /bin/sh
                 command: |
                     sleep 10
                     go test -v
