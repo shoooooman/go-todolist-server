@@ -6,7 +6,8 @@ Go言語によるTODOリスト管理のサーバーアプリケーション
 go get ./...
 go run todo_server.go
 ```
-`localhost:8080`をListen
+`localhost:8080`をListenする．
+`go_test`という名前のdatabaseをMySQLで作成しておく必要がある．
 
 ## 概要
 ### 実装した機能
